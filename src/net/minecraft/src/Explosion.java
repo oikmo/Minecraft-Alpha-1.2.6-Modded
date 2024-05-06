@@ -60,7 +60,7 @@ label0:
                         int i5 = field_12249_i.getBlockId(j4, k4, l4);
                         if(i5 > 0)
                         {
-                            f1 -= (Block.blocksList[i5].func_227_a(field_12253_e) + 0.3F) * f2;
+                            f1 -= (Block.blocksList[i5].getExplosionResistance(field_12253_e) + 0.3F) * f2;
                         }
                         if(f1 > 0.0F)
                         {

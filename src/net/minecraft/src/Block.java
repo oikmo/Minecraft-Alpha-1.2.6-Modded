@@ -225,7 +225,7 @@ public class Block
         return blockID;
     }
 
-    public float func_225_a(EntityPlayer entityplayer)
+    public float getBlockStrength(EntityPlayer entityplayer)
     {
         if(blockHardness < 0.0F)
         {
@@ -273,7 +273,7 @@ public class Block
 
     }
 
-    public float func_227_a(Entity entity)
+    public float getExplosionResistance(Entity entity)
     {
         return blockResistance / 5F;
     }

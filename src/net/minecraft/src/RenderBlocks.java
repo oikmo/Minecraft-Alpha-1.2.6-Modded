@@ -788,7 +788,7 @@ public class RenderBlocks
         Tessellator tessellator = Tessellator.instance;
         float f = block.getBlockBrightness(blockAccess, i, j, k);
         tessellator.setColorOpaque_F(f, f, f);
-        func_1239_a(block, blockAccess.getBlockMetadata(i, j, k), i, j, k);
+        drawCrossedSquares(block, blockAccess.getBlockMetadata(i, j, k), i, j, k);
         return true;
     }
 
@@ -850,7 +850,7 @@ public class RenderBlocks
         tessellator.addVertexWithUV(d9, d1 + 1.0D, d2 - d13, f1, f2);
     }
 
-    public void func_1239_a(Block block, int i, double d, double d1, double d2)
+    public void drawCrossedSquares(Block block, int i, double d, double d1, double d2)
     {
         Tessellator tessellator = Tessellator.instance;
         int j = block.getBlockTextureFromSideAndMetadata(0, i);
@@ -864,10 +864,10 @@ public class RenderBlocks
         double d4 = ((float)k + 15.99F) / 256F;
         double d5 = (float)l / 256F;
         double d6 = ((float)l + 15.99F) / 256F;
-        double d7 = (d + 0.5D) - 0.44999998807907104D;
-        double d8 = d + 0.5D + 0.44999998807907104D;
-        double d9 = (d2 + 0.5D) - 0.44999998807907104D;
-        double d10 = d2 + 0.5D + 0.44999998807907104D;
+        double d7 = (d + 0.5D) - 0.45;
+        double d8 = d + 0.5D + 0.45;
+        double d9 = (d2 + 0.5D) - 0.45;
+        double d10 = d2 + 0.5D + 0.45;
         tessellator.addVertexWithUV(d7, d1 + 1.0D, d9, d3, d5);
         tessellator.addVertexWithUV(d7, d1 + 0.0D, d9, d3, d6);
         tessellator.addVertexWithUV(d8, d1 + 0.0D, d10, d4, d6);
@@ -1903,7 +1903,7 @@ public class RenderBlocks
         {
             tessellator.startDrawingQuads();
             tessellator.setNormal(0.0F, -1F, 0.0F);
-            func_1239_a(block, byte0, -0.5D, -0.5D, -0.5D);
+            drawCrossedSquares(block, byte0, -0.5D, -0.5D, -0.5D);
             tessellator.draw();
         } else
         if(i == 13)

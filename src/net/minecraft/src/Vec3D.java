@@ -116,7 +116,7 @@ public class Vec3D
         double d1 = vec3d.xCoord - xCoord;
         double d2 = vec3d.yCoord - yCoord;
         double d3 = vec3d.zCoord - zCoord;
-        if(d1 * d1 < 1.0000000116860974E-007D)
+        if(d1 * d1 < 1f)
         {
             return null;
         }
@@ -135,7 +135,7 @@ public class Vec3D
         double d1 = vec3d.xCoord - xCoord;
         double d2 = vec3d.yCoord - yCoord;
         double d3 = vec3d.zCoord - zCoord;
-        if(d2 * d2 < 1.0000000116860974E-007D)
+        if(d2 * d2 < 1f)
         {
             return null;
         }

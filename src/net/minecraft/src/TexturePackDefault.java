@@ -19,7 +19,7 @@ public class TexturePackDefault extends TexturePackBase
         firstDescriptionLine = "The default look of Minecraft";
         try
         {
-        	field_6490_f = ImageIO.read((TexturePackDefault.class).getResource("/pack.png"));
+        	icon = ImageIO.read((TexturePackDefault.class).getResource("/pack.png"));
         }
         catch(IOException ioexception)
         {
@@ -29,7 +29,7 @@ public class TexturePackDefault extends TexturePackBase
 
     public void func_6484_b(Minecraft minecraft)
     {
-        if(field_6490_f != null)
+        if(icon != null)
         {
             minecraft.renderEngine.deleteTexture(texturePackName);
         }
@@ -37,19 +37,19 @@ public class TexturePackDefault extends TexturePackBase
 
     public void func_6483_c(Minecraft minecraft)
     {
-        if(field_6490_f != null && texturePackName < 0)
+        if(icon != null && texturePackName < 0)
         {
-            texturePackName = minecraft.renderEngine.allocateAndSetupTexture(field_6490_f);
+            texturePackName = minecraft.renderEngine.allocateAndSetupTexture(icon);
         }
-        if(field_6490_f != null)
+        if(icon != null)
         {
             minecraft.renderEngine.bindTexture(texturePackName);
         } else
         {
-            GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, minecraft.renderEngine.getTexture("/gui/unknown_pack.png"));
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, minecraft.renderEngine.getTexture("/gui/unknown_pack.png"));
         }
     }
 
     private int texturePackName;
-    private BufferedImage field_6490_f;
+    private BufferedImage icon;
 }

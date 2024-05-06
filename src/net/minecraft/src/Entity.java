@@ -373,7 +373,7 @@ public abstract class Entity
         List<?> list = worldObj.getCollidingBoundingBoxes(this, boundingBox.addCoord(d, d1, d2));
         for(int i = 0; i < list.size(); i++)
         {
-            d1 = ((AxisAlignedBB)list.get(i)).func_1172_b(boundingBox, d1);
+            d1 = ((AxisAlignedBB)list.get(i)).calculateYOffset(boundingBox, d1);
         }
 
         boundingBox.offset(0.0D, d1, 0.0D);
@@ -384,7 +384,7 @@ public abstract class Entity
         boolean flag1 = onGround || d6 != d1 && d6 < 0.0D;
         for(int j = 0; j < list.size(); j++)
         {
-            d = ((AxisAlignedBB)list.get(j)).func_1163_a(boundingBox, d);
+            d = ((AxisAlignedBB)list.get(j)).calculateXOffset(boundingBox, d);
         }
 
         boundingBox.offset(d, 0.0D, 0.0D);
@@ -394,7 +394,7 @@ public abstract class Entity
         }
         for(int k = 0; k < list.size(); k++)
         {
-            d2 = ((AxisAlignedBB)list.get(k)).func_1162_c(boundingBox, d2);
+            d2 = ((AxisAlignedBB)list.get(k)).calculateZOffset(boundingBox, d2);
         }
 
         boundingBox.offset(0.0D, 0.0D, d2);
@@ -412,10 +412,10 @@ public abstract class Entity
             d2 = d7;
             AxisAlignedBB axisalignedbb1 = boundingBox.copy();
             boundingBox.setBB(axisalignedbb);
-            List<?> list1 = worldObj.getCollidingBoundingBoxes(this, boundingBox.addCoord(d, d1, d2));
+            List<AxisAlignedBB> list1 = worldObj.getCollidingBoundingBoxes(this, boundingBox.addCoord(d, d1, d2));
             for(int j2 = 0; j2 < list1.size(); j2++)
             {
-                d1 = ((AxisAlignedBB)list1.get(j2)).func_1172_b(boundingBox, d1);
+                d1 = ((AxisAlignedBB)list1.get(j2)).calculateYOffset(boundingBox, d1);
             }
 
             boundingBox.offset(0.0D, d1, 0.0D);
@@ -425,7 +425,7 @@ public abstract class Entity
             }
             for(int k2 = 0; k2 < list1.size(); k2++)
             {
-                d = ((AxisAlignedBB)list1.get(k2)).func_1163_a(boundingBox, d);
+                d = ((AxisAlignedBB)list1.get(k2)).calculateXOffset(boundingBox, d);
             }
 
             boundingBox.offset(d, 0.0D, 0.0D);
@@ -435,7 +435,7 @@ public abstract class Entity
             }
             for(int l2 = 0; l2 < list1.size(); l2++)
             {
-                d2 = ((AxisAlignedBB)list1.get(l2)).func_1162_c(boundingBox, d2);
+                d2 = ((AxisAlignedBB)list1.get(l2)).calculateZOffset(boundingBox, d2);
             }
 
             boundingBox.offset(0.0D, 0.0D, d2);

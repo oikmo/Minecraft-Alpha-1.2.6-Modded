@@ -153,7 +153,7 @@ public class EntityArrow extends Entity
             }
             float f4 = 0.3F;
             AxisAlignedBB axisalignedbb = entity1.boundingBox.expands(f4, f4, f4);
-            MovingObjectPosition movingobjectposition1 = axisalignedbb.func_1169_a(vec3d, vec3d1);
+            MovingObjectPosition movingobjectposition1 = axisalignedbb.calculateIntercept(vec3d, vec3d1);
             if(movingobjectposition1 == null)
             {
                 continue;

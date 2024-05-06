@@ -139,8 +139,8 @@ public class EntityRenderer
             }
             float f2 = entity.func_4035_j_();
             AxisAlignedBB axisalignedbb = entity.boundingBox.expands(f2, f2, f2);
-            MovingObjectPosition movingobjectposition = axisalignedbb.func_1169_a(vec3d, vec3d2);
-            if(axisalignedbb.isVecInside(vec3d))
+            MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3d, vec3d2);
+            if(axisalignedbb.isVectorInside(vec3d))
             {
                 if(0.0D < d2 || d2 == 0.0D)
                 {

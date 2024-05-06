@@ -102,9 +102,9 @@ public class BlockStairs extends Block
         return modelBlock.getBlockBrightness(iblockaccess, i, j, k);
     }
 
-    public float func_227_a(Entity entity)
+    public float getExplosionResistance(Entity entity)
     {
-        return modelBlock.func_227_a(entity);
+        return modelBlock.getExplosionResistance(entity);
     }
 
     public int func_234_g()

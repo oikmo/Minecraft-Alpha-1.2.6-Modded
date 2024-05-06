@@ -3,12 +3,23 @@ package net.minecraft.src;
 // Jad home page: http://www.kpdus.com/jad.html
 // Decompiler options: packimports(3) braces deadcode 
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import net.minecraft.client.Minecraft;
-import org.w3c.dom.*;
 
 public class ThreadDownloadResources extends Thread
 {
@@ -36,34 +47,37 @@ public class ThreadDownloadResources extends Thread
             URL url = new URL("http://s3.amazonaws.com/MinecraftResources/");
             DocumentBuilderFactory documentbuilderfactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentbuilder = documentbuilderfactory.newDocumentBuilder();
-            Document document = documentbuilder.parse(url.openStream());
-             
-            NodeList nodelist = document.getElementsByTagName("Contents");
-            for(int i = 0; i < 2; i++)
-            {
-                for(int j = 0; j < nodelist.getLength(); j++)
-                {
-                    Node node = nodelist.item(j);
-                    if(node.getNodeType() != 1)
-                    {
-                        continue;
-                    }
-                    Element element = (Element)node;
-                    String s = ((Element)element.getElementsByTagName("Key").item(0)).getChildNodes().item(0).getNodeValue();
-                    long l = Long.parseLong(((Element)element.getElementsByTagName("Size").item(0)).getChildNodes().item(0).getNodeValue());
-                    if(l <= 0L)
-                    {
-                        continue;
-                    }
-                    downloadAndInstallResource(url, s, l, i);
-                    if(closing)
-                    {
-                        return;
-                    }
-                }
+            try {
+            	 Document document = documentbuilder.parse(url.openStream());
+                 
+                 NodeList nodelist = document.getElementsByTagName("Contents");
+                 for(int i = 0; i < 2; i++)
+                 {
+                     for(int j = 0; j < nodelist.getLength(); j++)
+                     {
+                         Node node = nodelist.item(j);
+                         if(node.getNodeType() != 1)
+                         {
+                             continue;
+                         }
+                         Element element = (Element)node;
+                         String s = ((Element)element.getElementsByTagName("Key").item(0)).getChildNodes().item(0).getNodeValue();
+                         long l = Long.parseLong(((Element)element.getElementsByTagName("Size").item(0)).getChildNodes().item(0).getNodeValue());
+                         if(l <= 0L)
+                         {
+                             continue;
+                         }
+                         downloadAndInstallResource(url, s, l, i);
+                         if(closing)
+                         {
+                             return;
+                         }
+                     }
 
-            }
+                 }
 
+            } catch(FileNotFoundException e) {}
+           
         }
         catch(Exception exception)
         {

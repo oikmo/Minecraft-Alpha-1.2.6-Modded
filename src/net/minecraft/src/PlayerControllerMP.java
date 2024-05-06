@@ -55,7 +55,7 @@ public class PlayerControllerMP extends PlayerController
         {
             Block.blocksList[i1].onBlockClicked(mc.theWorld, i, j, k, mc.thePlayer);
         }
-        if(i1 > 0 && Block.blocksList[i1].func_225_a(mc.thePlayer) >= 1.0F)
+        if(i1 > 0 && Block.blocksList[i1].getBlockStrength(mc.thePlayer) >= 1.0F)
         {
             sendBlockRemoved(i, j, k, l);
         }
@@ -94,7 +94,7 @@ public class PlayerControllerMP extends PlayerController
                 return;
             }
             Block block = Block.blocksList[i1];
-            field_9442_f += block.func_225_a(mc.thePlayer);
+            field_9442_f += block.getBlockStrength(mc.thePlayer);
             if(field_9441_h % 4F == 0.0F && block != null)
             {
                 mc.sndManager.playSound(block.stepSound.func_1145_d(), (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, (block.stepSound.func_1147_b() + 1.0F) / 8F, block.stepSound.func_1144_c() * 0.5F);
