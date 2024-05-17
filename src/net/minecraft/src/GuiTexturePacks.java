@@ -31,7 +31,7 @@ public class GuiTexturePacks extends GuiScreen
         controlList.add(new GuiSmallButton(5, width / 2 - 154, height - 48, "Open texture pack folder"));
         controlList.add(new GuiSmallButton(6, width / 2 + 4, height - 48, "Done"));
         mc.texturePackList.func_6532_a();
-        field_6453_p = (new File(mc.field_6297_D, "texturepacks")).getAbsolutePath();
+        field_6453_p = (new File(mc.mcDataDir, "texturepacks")).getAbsolutePath();
         field_6459_i = 32;
         field_6458_j = (height - 58) + 4;
         field_6457_l = 0;

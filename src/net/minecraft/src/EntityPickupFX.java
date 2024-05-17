@@ -40,7 +40,7 @@ public class EntityPickupFX extends EntityFX
         d7 -= field_659_m;
         d8 -= field_658_n;
         GL11.glColor4f(f7, f7, f7, 1.0F);
-        RenderManager.instance.func_853_a(field_675_a, (float)d6, (float)d7, (float)d8, field_675_a.rotationYaw, f);
+        RenderManager.instance.renderEntityWithPosYaw(field_675_a, (float)d6, (float)d7, (float)d8, field_675_a.rotationYaw, f);
     }
 
     public void onUpdate()

@@ -10,7 +10,7 @@ public class RenderMinecart extends Render
 
     public RenderMinecart()
     {
-        field_9246_c = 0.5F;
+        shadowSize = 0.5F;
         unusedModelBiped = new ModelMinecart();
     }
 

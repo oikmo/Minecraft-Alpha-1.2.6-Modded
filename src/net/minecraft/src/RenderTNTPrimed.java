@@ -11,7 +11,7 @@ public class RenderTNTPrimed extends Render
     public RenderTNTPrimed()
     {
         field_196_d = new RenderBlocks();
-        field_9246_c = 0.5F;
+        shadowSize = 0.5F;
     }
 
     public void func_153_a(EntityTNTPrimed entitytntprimed, double d, double d1, double d2, 

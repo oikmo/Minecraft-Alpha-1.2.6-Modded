@@ -13,8 +13,8 @@ public class RenderItem extends Render
     {
         renderBlocks = new RenderBlocks();
         random = new Random();
-        field_9246_c = 0.15F;
-        field_194_c = 0.75F;
+        shadowSize = 0.15F;
+        shadowOpaque = 0.75F;
     }
 
     public void func_165_a(EntityItem entityitem, double d, double d1, double d2, 
@@ -93,7 +93,7 @@ public class RenderItem extends Render
                     float f17 = (random.nextFloat() * 2.0F - 1.0F) * 0.3F;
                     GL11.glTranslatef(f15, f16, f17);
                 }
-                GL11.glRotatef(180F - renderManager.field_1225_i, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(180F - renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
                 tessellator.startDrawingQuads();
                 tessellator.setNormal(0.0F, 1.0F, 0.0F);
                 tessellator.addVertexWithUV(0.0F - f13, 0.0F - f14, 0.0D, f6, f11);

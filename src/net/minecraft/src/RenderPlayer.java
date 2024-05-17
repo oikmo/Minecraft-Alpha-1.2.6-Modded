@@ -57,7 +57,7 @@ public class RenderPlayer extends RenderLiving
         field_208_g.field_1278_i = field_207_h.field_1278_i = field_209_f.field_1278_i = false;
         float f2 = 1.6F;
         float f3 = 0.01666667F * f2;
-        float f4 = entityplayer.getDistanceToEntity(renderManager.field_1226_h);
+        float f4 = entityplayer.getDistanceToEntity(renderManager.entityPlayer);
         float f5 = entityplayer.isSneaking() ? 32F : 64F;
         if(f4 < f5)
         {
@@ -66,8 +66,8 @@ public class RenderPlayer extends RenderLiving
             GL11.glPushMatrix();
             GL11.glTranslatef((float)d + 0.0F, (float)d1 + 2.3F, (float)d2);
             GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(-renderManager.field_1225_i, 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef(renderManager.field_1224_j, 1.0F, 0.0F, 0.0F);
+            GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+            GL11.glRotatef(renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
             GL11.glScalef(-f3, -f3, f3);
             String s = entityplayer.name;
             GL11.glDisable(2896 /*GL_LIGHTING*/);
@@ -137,7 +137,7 @@ public class RenderPlayer extends RenderLiving
                 GL11.glRotatef(180F, 0.0F, 1.0F, 0.0F);
                 GL11.glScalef(f1, -f1, f1);
             }
-            renderManager.field_4236_f.renderItem(itemstack);
+            renderManager.itemRenderer.renderItem(itemstack);
             GL11.glPopMatrix();
         }
         ItemStack itemstack1 = entityplayer.inventory.getCurrentItem();
@@ -180,7 +180,7 @@ public class RenderPlayer extends RenderLiving
                 GL11.glRotatef(-90F, 1.0F, 0.0F, 0.0F);
                 GL11.glRotatef(20F, 0.0F, 0.0F, 1.0F);
             }
-            renderManager.field_4236_f.renderItem(itemstack1);
+            renderManager.itemRenderer.renderItem(itemstack1);
             GL11.glPopMatrix();
         }
     }

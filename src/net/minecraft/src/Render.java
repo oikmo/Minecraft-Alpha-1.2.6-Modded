@@ -12,8 +12,8 @@ public abstract class Render
     {
         new ModelBiped();
         new RenderBlocks();
-        field_9246_c = 0.0F;
-        field_194_c = 1.0F;
+        shadowSize = 0.0F;
+        shadowOpaque = 1.0F;
     }
 
     public abstract void doRender(Entity entity, double d, double d1, double d2, 
@@ -52,7 +52,7 @@ public abstract class Render
         float f7 = 0.5F;
         float f8 = 0.0F;
         float f9 = entity.height / entity.width;
-        GL11.glRotatef(-renderManager.field_1225_i, 0.0F, 1.0F, 0.0F);
+        GL11.glRotatef(-renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
         GL11.glTranslatef(0.0F, 0.0F, -0.4F + (float)(int)f9 * 0.02F);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         tessellator.startDrawingQuads();
@@ -81,7 +81,7 @@ public abstract class Render
         renderengine.bindTexture(renderengine.getTexture("%clamp%/misc/shadow.png"));
         World world = getWorldFromRenderManager();
         GL11.glDepthMask(false);
-        float f2 = field_9246_c;
+        float f2 = shadowSize;
         double d3 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)f1;
         double d4 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)f1 + (double)entity.func_392_h_();
         double d5 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)f1;
@@ -239,10 +239,10 @@ public abstract class Render
     public void doRenderShadowAndFire(Entity entity, double d, double d1, double d2, 
             float f, float f1)
     {
-        if(renderManager.options.fancyGraphics && field_9246_c > 0.0F)
+        if(renderManager.options.fancyGraphics && shadowSize > 0.0F)
         {
-            double d3 = renderManager.func_851_a(entity.posX, entity.posY, entity.posZ);
-            float f2 = (float)((1.0D - d3 / 256D) * (double)field_194_c);
+            double d3 = renderManager.getDistanceToCamera(entity.posX, entity.posY, entity.posZ);
+            float f2 = (float)((1.0D - d3 / 256D) * (double)shadowOpaque);
             if(f2 > 0.0F)
             {
                 renderShadow(entity, d, d1, d2, f2, f1);
@@ -258,8 +258,9 @@ public abstract class Render
     {
         return renderManager.getFontRenderer();
     }
-
+    
+    
     protected RenderManager renderManager;
-    protected float field_9246_c;
-    protected float field_194_c;
+    protected float shadowSize;
+    protected float shadowOpaque;
 }

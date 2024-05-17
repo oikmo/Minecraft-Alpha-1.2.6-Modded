@@ -6,9 +6,9 @@ package net.minecraft.src;
 public interface IWorldAccess
 {
 
-    public abstract void func_934_a(int i, int j, int k);
+    public abstract void markBlockNeedsUpdate(int i, int j, int k);
 
-    public abstract void func_937_b(int i, int j, int k, int l, int i1, int j1);
+    public abstract void markBlockRangeNeedsUpdate(int i, int j, int k, int l, int i1, int j1);
 
     public abstract void playSound(String s, double d, double d1, double d2, 
             float f, float f1);
@@ -20,9 +20,9 @@ public interface IWorldAccess
 
     public abstract void releaseEntitySkin(Entity entity);
 
-    public abstract void func_936_e();
+    public abstract void updateRenderers();
 
     public abstract void playRecord(String s, int i, int j, int k);
 
-    public abstract void func_935_a(int i, int j, int k, TileEntity tileentity);
+    public abstract void doNothingWithTileEntity(int i, int j, int k, TileEntity tileentity);
 }

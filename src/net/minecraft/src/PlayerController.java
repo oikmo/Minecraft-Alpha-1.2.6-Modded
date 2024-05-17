@@ -46,7 +46,7 @@ public class PlayerController
     {
     }
 
-    public void func_6467_a(float f)
+    public void setPartialTime(float f)
     {
     }
 

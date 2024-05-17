@@ -32,7 +32,7 @@ public class WorldClient extends World
             skylightSubtracted = i;
             for(int j = 0; j < worldAccesses.size(); j++)
             {
-                ((IWorldAccess)worldAccesses.get(j)).func_936_e();
+                ((IWorldAccess)worldAccesses.get(j)).updateRenderers();
             }
 
         }

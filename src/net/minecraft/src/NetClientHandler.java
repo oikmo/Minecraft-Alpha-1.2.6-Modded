@@ -311,7 +311,7 @@ public class NetClientHandler extends NetHandler
         if(entity != null)
         {
             worldClient.playSoundAtEntity(entity, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-            mc.effectRenderer.func_1192_a(new EntityPickupFX(mc.theWorld, entity, ((Entity) (obj)), -0.5F));
+            mc.effectRenderer.addEffect(new EntityPickupFX(mc.theWorld, entity, ((Entity) (obj)), -0.5F));
             worldClient.func_710_c(packet22collect.collectedEntityId);
         }
     }

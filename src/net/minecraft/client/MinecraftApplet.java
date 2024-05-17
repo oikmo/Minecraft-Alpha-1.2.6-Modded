@@ -20,9 +20,9 @@ public class MinecraftApplet extends Applet {
 		}
 
 		this.mc = new MinecraftAppletImpl(this, this, this.mcCanvas, this, this.getWidth(), this.getHeight(), var1);
-		this.mc.field_6319_j = this.getDocumentBase().getHost();
+		this.mc.minecraftUri = this.getDocumentBase().getHost();
 		if(this.getDocumentBase().getPort() > 0) {
-			this.mc.field_6319_j = this.mc.field_6319_j + ":" + this.getDocumentBase().getPort();
+			this.mc.minecraftUri = this.mc.minecraftUri + ":" + this.getDocumentBase().getPort();
 		}
 
 		if(this.getParameter("username") != null && this.getParameter("sessionid") != null) {
@@ -36,13 +36,13 @@ public class MinecraftApplet extends Applet {
 		}
 
 		if(this.getParameter("loadmap_user") != null && this.getParameter("loadmap_id") != null) {
-			this.mc.field_6310_s = this.getParameter("loadmap_user");
+			//this.mc.field_6310_s = this.getParameter("loadmap_user");
 			this.mc.field_6309_t = Integer.parseInt(this.getParameter("loadmap_id"));
 		} else if(this.getParameter("server") != null && this.getParameter("port") != null) {
 			this.mc.func_6258_a(this.getParameter("server"), Integer.parseInt(this.getParameter("port")));
 		}
 
-		this.mc.field_6317_l = true;
+		this.mc.hideQuitButton = true;
 		this.setLayout(new BorderLayout());
 		this.add(this.mcCanvas, "Center");
 		this.mcCanvas.setFocusable(true);
@@ -58,14 +58,14 @@ public class MinecraftApplet extends Applet {
 
 	public void start() {
 		if(this.mc != null) {
-			this.mc.field_6316_m = false;
+			this.mc.isGamePaused = false;
 		}
 
 	}
 
 	public void stop() {
 		if(this.mc != null) {
-			this.mc.field_6316_m = true;
+			this.mc.isGamePaused = true;
 		}
 
 	}

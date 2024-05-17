@@ -11,7 +11,7 @@ public class RenderFallingSand extends Render
     public RenderFallingSand()
     {
         field_197_d = new RenderBlocks();
-        field_9246_c = 0.5F;
+        shadowSize = 0.5F;
     }
 
     public void func_156_a(EntityFallingSand entityfallingsand, double d, double d1, double d2, 

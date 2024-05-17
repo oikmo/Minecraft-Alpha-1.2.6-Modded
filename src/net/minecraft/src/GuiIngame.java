@@ -33,7 +33,7 @@ public class GuiIngame extends Gui
         int k = scaledresolution.getScaledWidth();
         int l = scaledresolution.getScaledHeight();
         FontRenderer fontrenderer = mc.fontRenderer;
-        mc.field_9243_r.func_905_b();
+        mc.entityRenderer.func_905_b();
         GL11.glEnable(3042 /*GL_BLEND*/);
         if(mc.gameSettings.fancyGraphics)
         {

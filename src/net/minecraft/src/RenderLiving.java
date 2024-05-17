@@ -11,7 +11,7 @@ public class RenderLiving extends Render
     public RenderLiving(ModelBase modelbase, float f)
     {
         unusedRenderBlocks = modelbase;
-        field_9246_c = f;
+        shadowSize = f;
     }
 
     public void func_4013_a(ModelBase modelbase)

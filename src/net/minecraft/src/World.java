@@ -603,7 +603,7 @@ public class World
     {
         for(int l = 0; l < worldAccesses.size(); l++)
         {
-            ((IWorldAccess)worldAccesses.get(l)).func_934_a(i, j, k);
+            ((IWorldAccess)worldAccesses.get(l)).markBlockNeedsUpdate(i, j, k);
         }
 
     }
@@ -629,7 +629,7 @@ public class World
     {
         for(int k1 = 0; k1 < worldAccesses.size(); k1++)
         {
-            ((IWorldAccess)worldAccesses.get(k1)).func_937_b(i, j, k, l, i1, j1);
+            ((IWorldAccess)worldAccesses.get(k1)).markBlockRangeNeedsUpdate(i, j, k, l, i1, j1);
         }
 
     }
@@ -836,7 +836,7 @@ public class World
         chunk.setLightValue(enumskyblock, i & 0xf, j, k & 0xf, l);
         for(int i1 = 0; i1 < worldAccesses.size(); i1++)
         {
-            ((IWorldAccess)worldAccesses.get(i1)).func_934_a(i, j, k);
+            ((IWorldAccess)worldAccesses.get(i1)).markBlockNeedsUpdate(i, j, k);
         }
 
     }
@@ -1861,7 +1861,7 @@ public class World
             skylightSubtracted = i;
             for(int j = 0; j < worldAccesses.size(); j++)
             {
-                ((IWorldAccess)worldAccesses.get(j)).func_936_e();
+                ((IWorldAccess)worldAccesses.get(j)).updateRenderers();
             }
 
         }
@@ -2054,7 +2054,7 @@ public class World
         }
         for(int l = 0; l < worldAccesses.size(); l++)
         {
-            ((IWorldAccess)worldAccesses.get(l)).func_935_a(i, j, k, tileentity);
+            ((IWorldAccess)worldAccesses.get(l)).doNothingWithTileEntity(i, j, k, tileentity);
         }
 
     }

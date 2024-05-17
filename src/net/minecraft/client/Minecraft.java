@@ -96,24 +96,24 @@ public abstract class Minecraft implements Runnable {
 	public EntityPlayerSP thePlayer;
 	public EffectRenderer effectRenderer;
 	public Session session = null;
-	public String field_6319_j;
+	public String minecraftUri;
 	public Canvas mcCanvas;
-	public boolean field_6317_l = true;
-	public volatile boolean field_6316_m = false;
+	public boolean hideQuitButton = true;
+	public volatile boolean isGamePaused = false;
 	public RenderEngine renderEngine;
 	public FontRenderer fontRenderer;
 	public GuiScreen currentScreen = null;
 	public LoadingScreenRenderer loadingScreen = new LoadingScreenRenderer(this);
-	public EntityRenderer field_9243_r = new EntityRenderer(this);
+	public EntityRenderer entityRenderer = new EntityRenderer(this);
 	private ThreadDownloadResources downloadResourcesThread;
 	private int ticksRan = 0;
-	private int field_6282_S = 0;
-	private int field_9236_T;
-	private int field_9235_U;
+	private int leftClickCounter = 0;
+	private int tempDisplayWidth;
+	private int tempDisplayHeight;
 	public String field_6310_s = null;
 	public int field_6309_t = 0;
 	public GuiIngame ingameGUI;
-	public boolean field_6307_v = false;
+	public boolean skipRenderWorld = false;
 	public ModelBiped field_9242_w = new ModelBiped(0.0F);
 	public MovingObjectPosition objectMouseOver = null;
 	public GameSettings gameSettings;
@@ -144,8 +144,8 @@ public abstract class Minecraft implements Runnable {
 	public static String version = "";
 
 	public Minecraft(Component var1, Canvas var2, MinecraftApplet var3, int var4, int var5, boolean var6) {
-		this.field_9236_T = var4;
-		this.field_9235_U = var5;
+		this.tempDisplayWidth = var4;
+		this.tempDisplayHeight = var5;
 		this.a = var6;
 		this.mcApplet = var3;
 		new ThreadSleepForever(this, "Timer hack thread");
@@ -215,7 +215,7 @@ public abstract class Minecraft implements Runnable {
 		}
 		Display.setTitle("Minecraft Alpha v1.2.6");
 		
-		RenderManager.instance.field_4236_f = new ItemRenderer(this);
+		RenderManager.instance.itemRenderer = new ItemRenderer(this);
 		this.field_6297_D = getMinecraftDir();
 		this.gameSettings = new GameSettings(this, this.field_6297_D);
 		this.texturePackList = new TexturePackList(this, this.field_6297_D);
@@ -246,7 +246,7 @@ public abstract class Minecraft implements Runnable {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		this.checkGLError("Startup");
 		this.glCapabilities = new OpenGlCapsChecker();
-		this.sndManager.func_340_a(this.gameSettings);
+		this.sndManager.loadSoundSettings(this.gameSettings);
 		this.renderEngine.registerTextureFX(this.field_9231_Y);
 		this.renderEngine.registerTextureFX(this.field_9232_X);
 		this.renderEngine.registerTextureFX(new TexturePortalFX());
@@ -387,7 +387,7 @@ public abstract class Minecraft implements Runnable {
 				int var3 = var2.getScaledWidth();
 				int var4 = var2.getScaledHeight();
 				((GuiScreen)var1).setWorldAndResolution(this, var3, var4);
-				this.field_6307_v = false;
+				this.skipRenderWorld = false;
 			} else {
 				this.func_6259_e();
 			}
@@ -493,7 +493,7 @@ public abstract class Minecraft implements Runnable {
 						this.shutdown();
 					}
 
-					if(this.field_6316_m && this.theWorld != null) {
+					if(this.isGamePaused && this.theWorld != null) {
 						float var4 = this.timer.renderPartialTicks;
 						this.timer.updateTimer();
 						this.timer.renderPartialTicks = var4;
@@ -536,12 +536,12 @@ public abstract class Minecraft implements Runnable {
 						Display.update();
 					}
 
-					if(!this.field_6307_v) {
+					if(!this.skipRenderWorld) {
 						if(this.playerController != null) {
-							this.playerController.func_6467_a(this.timer.renderPartialTicks);
+							this.playerController.setPartialTime(this.timer.renderPartialTicks);
 						}
 
-						this.field_9243_r.func_4136_b(this.timer.renderPartialTicks);
+						this.entityRenderer.func_4136_b(this.timer.renderPartialTicks);
 					}
 
 					if(!Display.isActive()) {
@@ -581,7 +581,7 @@ public abstract class Minecraft implements Runnable {
 					this.checkGLError("Post render");
 					++var3;
 
-					for(this.field_6316_m = !this.isMultiplayerWorld() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame(); System.currentTimeMillis() >= var1 + 1000L; var3 = 0) {
+					for(this.isGamePaused = !this.isMultiplayerWorld() && this.currentScreen != null && this.currentScreen.doesGuiPauseGame(); System.currentTimeMillis() >= var1 + 1000L; var3 = 0) {
 						this.field_6292_I = var3 + " fps, " + WorldRenderer.field_1762_b + " chunk updates";
 						WorldRenderer.field_1762_b = 0;
 						var1 += 1000L;
@@ -722,7 +722,7 @@ public abstract class Minecraft implements Runnable {
 
 	private void func_6254_a(int var1, boolean var2) {
 		if(!this.playerController.field_1064_b) {
-			if(var1 != 0 || this.field_6282_S <= 0) {
+			if(var1 != 0 || this.leftClickCounter <= 0) {
 				if(var2 && this.objectMouseOver != null && this.objectMouseOver.typeOfHit == 0 && var1 == 0) {
 					int var3 = this.objectMouseOver.blockX;
 					int var4 = this.objectMouseOver.blockY;
@@ -738,7 +738,7 @@ public abstract class Minecraft implements Runnable {
 	}
 
 	private void clickMouse(int var1) {
-		if(var1 != 0 || this.field_6282_S <= 0) {
+		if(var1 != 0 || this.leftClickCounter <= 0) {
 			if(var1 == 0) {
 				this.thePlayer.func_457_w();
 			}
@@ -746,7 +746,7 @@ public abstract class Minecraft implements Runnable {
 			boolean var2 = true;
 			if(this.objectMouseOver == null) {
 				if(var1 == 0 && !(this.playerController instanceof PlayerControllerTest)) {
-					this.field_6282_S = 10;
+					this.leftClickCounter = 10;
 				}
 			} else if(this.objectMouseOver.typeOfHit == 1) {
 				if(var1 == 0) {
@@ -782,7 +782,7 @@ public abstract class Minecraft implements Runnable {
 					if(var8.stackSize == 0) {
 						this.thePlayer.inventory.mainInventory[this.thePlayer.inventory.currentItem] = null;
 					} else if(var8.stackSize != var9) {
-						this.field_9243_r.itemRenderer.func_9449_b();
+						this.entityRenderer.itemRenderer.func_9449_b();
 					}
 				}
 			}
@@ -790,7 +790,7 @@ public abstract class Minecraft implements Runnable {
 			if(var2 && var1 == 1) {
 				ItemStack var10 = this.thePlayer.inventory.getCurrentItem();
 				if(var10 != null && this.playerController.sendUseItem(this.thePlayer, this.theWorld, var10)) {
-					this.field_9243_r.itemRenderer.func_9450_c();
+					this.entityRenderer.itemRenderer.func_9450_c();
 				}
 			}
 
@@ -817,8 +817,8 @@ public abstract class Minecraft implements Runnable {
 					this.displayWidth = this.mcCanvas.getWidth();
 					this.displayHeight = this.mcCanvas.getHeight();
 				} else {
-					this.displayWidth = this.field_9236_T;
-					this.displayHeight = this.field_9235_U;
+					this.displayWidth = this.tempDisplayWidth;
+					this.displayHeight = this.tempDisplayHeight;
 				}
 
 				if(this.displayWidth <= 0) {
@@ -829,7 +829,7 @@ public abstract class Minecraft implements Runnable {
 					this.displayHeight = 1;
 				}
 
-				Display.setDisplayMode(new DisplayMode(this.field_9236_T, this.field_9235_U));
+				Display.setDisplayMode(new DisplayMode(this.tempDisplayWidth, this.tempDisplayHeight));
 			}
 
 			this.func_6273_f();
@@ -894,17 +894,17 @@ public abstract class Minecraft implements Runnable {
 
 	public void runTick() {
 		this.ingameGUI.func_555_a();
-		this.field_9243_r.func_910_a(1.0F);
+		this.entityRenderer.func_910_a(1.0F);
 		if(this.thePlayer != null) {
 			this.thePlayer.func_6420_o();
 		}
 
-		if(!this.field_6316_m && this.theWorld != null) {
+		if(!this.isGamePaused && this.theWorld != null) {
 			this.playerController.updateController();
 		}
 
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/terrain.png"));
-		if(!this.field_6316_m) {
+		if(!this.isGamePaused) {
 			this.renderEngine.func_1067_a();
 		}
 
@@ -931,8 +931,8 @@ public abstract class Minecraft implements Runnable {
 						long var1;
 						do {
 							if(!Mouse.next()) {
-								if(this.field_6282_S > 0) {
-									--this.field_6282_S;
+								if(this.leftClickCounter > 0) {
+									--this.leftClickCounter;
 								}
 
 								while(true) {
@@ -1051,27 +1051,27 @@ public abstract class Minecraft implements Runnable {
 				this.theWorld.difficultySetting = 3;
 			}
 
-			if(!this.field_6316_m) {
-				this.field_9243_r.func_911_a();
+			if(!this.isGamePaused) {
+				this.entityRenderer.func_911_a();
 			}
 
-			if(!this.field_6316_m) {
+			if(!this.isGamePaused) {
 				this.renderGlobal.func_945_d();
 			}
 
-			if(!this.field_6316_m) {
+			if(!this.isGamePaused) {
 				this.theWorld.func_633_c();
 			}
 
-			if(!this.field_6316_m || this.isMultiplayerWorld()) {
+			if(!this.isGamePaused || this.isMultiplayerWorld()) {
 				this.theWorld.tick();
 			}
 
-			if(!this.field_6316_m && this.theWorld != null) {
+			if(!this.isGamePaused && this.theWorld != null) {
 				this.theWorld.randomDisplayUpdates(MathHelper.floor_double(this.thePlayer.posX), MathHelper.floor_double(this.thePlayer.posY), MathHelper.floor_double(this.thePlayer.posZ));
 			}
 
-			if(!this.field_6316_m) {
+			if(!this.isGamePaused) {
 				this.effectRenderer.func_1193_a();
 			}
 		}
@@ -1082,7 +1082,7 @@ public abstract class Minecraft implements Runnable {
 	private void forceReload() {
 		System.out.println("FORCING RELOAD!");
 		this.sndManager = new SoundManager();
-		this.sndManager.func_340_a(this.gameSettings);
+		this.sndManager.loadSoundSettings(this.gameSettings);
 		this.downloadResourcesThread.reloadResources();
 	}
 
@@ -1149,7 +1149,7 @@ public abstract class Minecraft implements Runnable {
 		this.renderViewEntity = null;
 		this.loadingScreen.printText(var2);
 		this.loadingScreen.displayLoadingString("");
-		this.sndManager.playStreaming((String)null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
+		this.sndManager.playStreaming((String)null, 0.0F, 0.0F, 0.0F, 0.0F);
 		if(this.theWorld != null) {
 			this.theWorld.saveWorldIndirectly(this.loadingScreen);
 		}
@@ -1314,8 +1314,8 @@ public abstract class Minecraft implements Runnable {
 		MinecraftImpl var7 = new MinecraftImpl(var5, var6, (MinecraftApplet)null, 854, 480, var3, var5);
 		Thread var8 = new Thread(var7, "Minecraft main thread");
 		var8.setPriority(10);
-		var7.field_6317_l = false;
-		var7.field_6319_j = "www.minecraft.net";
+		var7.hideQuitButton = false;
+		var7.minecraftUri = "www.minecraft.net";
 		if(var0 != null && var1 != null) {
 			var7.session = new Session(var0, var1);
 		} else {

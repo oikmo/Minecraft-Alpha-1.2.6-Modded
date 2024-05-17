@@ -47,7 +47,7 @@ public class RenderBiped extends RenderLiving
                 GL11.glRotatef(-90F, 1.0F, 0.0F, 0.0F);
                 GL11.glRotatef(20F, 0.0F, 0.0F, 1.0F);
             }
-            renderManager.field_4236_f.renderItem(itemstack);
+            renderManager.itemRenderer.renderItem(itemstack);
             GL11.glPopMatrix();
         }
     }

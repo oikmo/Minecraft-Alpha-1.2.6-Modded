@@ -172,7 +172,7 @@ public class WorldRenderer
         field_1737_F.addAll(hashset1);
         hashset.removeAll(field_1745_B);
         field_1737_F.removeAll(hashset);
-        field_1747_A = Chunk.field_1540_a;
+        isChunkLit = Chunk.field_1540_a;
         field_1739_E = true;
     }
 
@@ -270,7 +270,7 @@ public class WorldRenderer
     public boolean field_1734_x;
     public boolean field_1733_y;
     public int field_1732_z;
-    public boolean field_1747_A;
+    public boolean isChunkLit;
     private boolean field_1739_E;
     public List<TileEntity> field_1745_B;
     private List<TileEntity> field_1737_F;

@@ -190,7 +190,7 @@ public class ItemRenderer
             GL11.glRotatef(-135F, 0.0F, 1.0F, 0.0F);
             GL11.glScalef(1.0F, 1.0F, 1.0F);
             GL11.glTranslatef(5.6F, 0.0F, 0.0F);
-            Render render = RenderManager.instance.func_855_a(mc.thePlayer);
+            Render render = RenderManager.instance.getEntityRenderObject(mc.thePlayer);
             RenderPlayer renderplayer = (RenderPlayer)render;
             f10 = 1.0F;
             GL11.glScalef(f10, f10, f10);

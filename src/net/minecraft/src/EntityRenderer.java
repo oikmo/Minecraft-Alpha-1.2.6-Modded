@@ -455,7 +455,7 @@ public class EntityRenderer
             }
             mc.thePlayer.func_346_d(f3, f4 * (float)l);
         }
-        if(mc.field_6307_v)
+        if(mc.skipRenderWorld)
         {
             return;
         }
@@ -525,7 +525,7 @@ public class EntityRenderer
             func_4140_a(1);
             Frustrum frustrum = new Frustrum();
             frustrum.func_343_a(d, d1, d2);
-            mc.renderGlobal.func_960_a(frustrum, f);
+            mc.renderGlobal.clipRenderersByFrustum(frustrum, f);
             mc.renderGlobal.func_948_a(entityplayersp, false);
             func_4140_a(0);
             GL11.glEnable(2912);
@@ -533,7 +533,7 @@ public class EntityRenderer
             RenderHelper.disableStandardItemLighting();
             renderglobal.func_943_a(entityplayersp, 0, f);
             RenderHelper.enableStandardItemLighting();
-            renderglobal.func_951_a(entityplayersp.getPosition(f), frustrum, f);
+            renderglobal.renderEntities(entityplayersp.getPosition(f), frustrum, f);
             effectrenderer.func_1187_b(entityplayersp, f);
             RenderHelper.disableStandardItemLighting();
             func_4140_a(0);
@@ -627,7 +627,7 @@ public class EntityRenderer
             float f1 = random.nextFloat();
             if(l1 > 0)
             {
-                mc.effectRenderer.func_1192_a(new EntityRainFX(world, (float)i1 + f, (double)((float)k1 + 0.1F) - Block.blocksList[l1].minY, (float)j1 + f1));
+                mc.effectRenderer.addEffect(new EntityRainFX(world, (float)i1 + f, (double)((float)k1 + 0.1F) - Block.blocksList[l1].minY, (float)j1 + f1));
             }
         }
 

@@ -140,7 +140,7 @@ public class EntityPlayerSP extends EntityPlayer
 
     public void func_443_a_(Entity entity, int i)
     {
-        mc.effectRenderer.func_1192_a(new EntityPickupFX(mc.theWorld, entity, this, -0.5F));
+        mc.effectRenderer.addEffect(new EntityPickupFX(mc.theWorld, entity, this, -0.5F));
     }
 
     public int getPlayerArmorValue()

@@ -10,7 +10,7 @@ public class RenderBoat extends Render
 
     public RenderBoat()
     {
-        field_9246_c = 0.5F;
+        shadowSize = 0.5F;
         field_198_d = new ModelBoat();
     }
 

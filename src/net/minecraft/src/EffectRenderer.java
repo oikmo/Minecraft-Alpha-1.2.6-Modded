@@ -26,7 +26,7 @@ public class EffectRenderer
 
     }
 
-    public void func_1192_a(EntityFX entityfx)
+    public void addEffect(EntityFX entityfx)
     {
         int i = entityfx.func_404_c();
         field_1728_b[i].add(entityfx);
@@ -137,7 +137,7 @@ public class EffectRenderer
                     double d = (double)i + ((double)j1 + 0.5D) / (double)i1;
                     double d1 = (double)j + ((double)k1 + 0.5D) / (double)i1;
                     double d2 = (double)k + ((double)l1 + 0.5D) / (double)i1;
-                    func_1192_a((new EntityDiggingFX(worldObj, d, d1, d2, d - (double)i - 0.5D, d1 - (double)j - 0.5D, d2 - (double)k - 0.5D, block)).func_4041_a(i, j, k));
+                    addEffect((new EntityDiggingFX(worldObj, d, d1, d2, d - (double)i - 0.5D, d1 - (double)j - 0.5D, d2 - (double)k - 0.5D, block)).func_4041_a(i, j, k));
                 }
 
             }
@@ -182,7 +182,7 @@ public class EffectRenderer
         {
             d = (double)i + block.maxX + (double)f;
         }
-        func_1192_a((new EntityDiggingFX(worldObj, d, d1, d2, 0.0D, 0.0D, 0.0D, block)).func_4041_a(i, j, k).func_407_b(0.2F).func_405_d(0.6F));
+        addEffect((new EntityDiggingFX(worldObj, d, d1, d2, 0.0D, 0.0D, 0.0D, block)).func_4041_a(i, j, k).func_407_b(0.2F).func_405_d(0.6F));
     }
 
     public String func_1190_b()
