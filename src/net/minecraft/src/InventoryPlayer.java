@@ -392,7 +392,7 @@ public class InventoryPlayer
             armorInventory[j].damageItem(i);
             if(armorInventory[j].stackSize == 0)
             {
-                armorInventory[j].func_1097_a(player);
+                armorInventory[j].onItemDestroyedByUse(player);
                 armorInventory[j] = null;
             }
         }

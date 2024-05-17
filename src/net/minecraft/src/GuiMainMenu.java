@@ -93,7 +93,7 @@ public class GuiMainMenu extends GuiScreen
         controlList.add(new GuiButton(3, width / 2 - 100, height / 4 + 96, "Options..."));
         controlList.add(new GuiButton(4, 4, height - 24, 55, 20, "Set Name"));
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 120 + 12, "Quit game..."));
-        if(mc.field_6320_i == null)
+        if(mc.session == null)
         {
             ((GuiButton)controlList.get(1)).enabled = false;
         }

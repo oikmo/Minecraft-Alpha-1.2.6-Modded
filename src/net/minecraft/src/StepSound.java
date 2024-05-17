@@ -14,12 +14,12 @@ public class StepSound
         field_1679_c = f1;
     }
 
-    public float func_1147_b()
+    public float getVolume()
     {
         return field_1677_b;
     }
 
-    public float func_1144_c()
+    public float getPitch()
     {
         return field_1679_c;
     }
@@ -29,7 +29,7 @@ public class StepSound
         return (new StringBuilder()).append("step.").append(field_1678_a).toString();
     }
 
-    public String func_1145_d()
+    public String getStepSound()
     {
         return (new StringBuilder()).append("step.").append(field_1678_a).toString();
     }

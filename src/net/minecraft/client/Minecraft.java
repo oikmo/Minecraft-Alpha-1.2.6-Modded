@@ -95,7 +95,7 @@ public abstract class Minecraft implements Runnable {
 	public RenderGlobal renderGlobal;
 	public EntityPlayerSP thePlayer;
 	public EffectRenderer effectRenderer;
-	public Session field_6320_i = null;
+	public Session session = null;
 	public String field_6319_j;
 	public Canvas mcCanvas;
 	public boolean field_6317_l = true;
@@ -517,7 +517,7 @@ public abstract class Minecraft implements Runnable {
 
 					long var20 = System.nanoTime() - var19;
 					this.checkGLError("Pre render");
-					this.sndManager.func_338_a(this.thePlayer, this.timer.renderPartialTicks);
+					this.sndManager.setListener(this.thePlayer, this.timer.renderPartialTicks);
 					GL11.glEnable(GL11.GL_TEXTURE_2D);
 					if(this.theWorld != null && !this.theWorld.multiplayerWorld) {
 						while(this.theWorld.func_6465_g()) {
@@ -730,7 +730,7 @@ public abstract class Minecraft implements Runnable {
 					this.playerController.sendBlockRemoving(var3, var4, var5, this.objectMouseOver.sideHit);
 					this.effectRenderer.func_1191_a(var3, var4, var5, this.objectMouseOver.sideHit);
 				} else {
-					this.playerController.func_6468_a();
+					this.playerController.resetBlockRemoving();
 				}
 
 			}
@@ -750,11 +750,11 @@ public abstract class Minecraft implements Runnable {
 				}
 			} else if(this.objectMouseOver.typeOfHit == 1) {
 				if(var1 == 0) {
-					this.playerController.func_6472_b(this.thePlayer, this.objectMouseOver.entityHit);
+					this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
 				}
 
 				if(var1 == 1) {
-					this.playerController.func_6475_a(this.thePlayer, this.objectMouseOver.entityHit);
+					this.playerController.interactWithEntity(this.thePlayer, this.objectMouseOver.entityHit);
 				}
 			} else if(this.objectMouseOver.typeOfHit == 0) {
 				int var3 = this.objectMouseOver.blockX;
@@ -900,7 +900,7 @@ public abstract class Minecraft implements Runnable {
 		}
 
 		if(!this.field_6316_m && this.theWorld != null) {
-			this.playerController.func_6474_c();
+			this.playerController.updateController();
 		}
 
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/terrain.png"));
@@ -1157,7 +1157,7 @@ public abstract class Minecraft implements Runnable {
 		this.theWorld = var1;
 		System.out.println("Player is " + this.thePlayer);
 		if(var1 != null) {
-			this.playerController.func_717_a(var1);
+			this.playerController.onWorldChange(var1);
 			if(!this.isMultiplayerWorld()) {
 				if(var3 == null) {
 					this.thePlayer = (EntityPlayerSP)var1.func_4085_a(EntityPlayerSP.class);
@@ -1241,9 +1241,9 @@ public abstract class Minecraft implements Runnable {
 		String var4 = var1.substring(0, var3);
 		var1 = var1.substring(var3 + 1);
 		if(var4.equalsIgnoreCase("sound")) {
-			this.sndManager.func_6372_a(var1, var2);
+			this.sndManager.addSound(var1, var2);
 		} else if(var4.equalsIgnoreCase("newsound")) {
-			this.sndManager.func_6372_a(var1, var2);
+			this.sndManager.addSound(var1, var2);
 		} else if(var4.equalsIgnoreCase("streaming")) {
 			this.sndManager.addStreaming(var1, var2);
 		} else if(var4.equalsIgnoreCase("music")) {
@@ -1317,9 +1317,9 @@ public abstract class Minecraft implements Runnable {
 		var7.field_6317_l = false;
 		var7.field_6319_j = "www.minecraft.net";
 		if(var0 != null && var1 != null) {
-			var7.field_6320_i = new Session(var0, var1);
+			var7.session = new Session(var0, var1);
 		} else {
-			var7.field_6320_i = new Session("Player" + System.currentTimeMillis() % 1000L, "");
+			var7.session = new Session("Player" + System.currentTimeMillis() % 1000L, "");
 		}
 
 		if(var2 != null) {

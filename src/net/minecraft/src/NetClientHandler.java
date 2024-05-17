@@ -390,18 +390,18 @@ public class NetClientHandler extends NetHandler
     {
         if(packet2handshake.username.equals("-"))
         {
-            addToSendQueue(new Packet1Login(mc.field_6320_i.inventory, "Password", 6));
+            addToSendQueue(new Packet1Login(mc.session.inventory, "Password", 6));
         } else
         {
             try
             {
-                URL url = new URL((new StringBuilder()).append("http://www.minecraft.net/game/joinserver.jsp?user=").append(mc.field_6320_i.inventory).append("&sessionId=").append(mc.field_6320_i.field_6543_c).append("&serverId=").append(packet2handshake.username).toString());
+                URL url = new URL((new StringBuilder()).append("http://www.minecraft.net/game/joinserver.jsp?user=").append(mc.session.inventory).append("&sessionId=").append(mc.session.field_6543_c).append("&serverId=").append(packet2handshake.username).toString());
                 BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(url.openStream()));
                 String s = bufferedreader.readLine();
                 bufferedreader.close();
                 if(s.equalsIgnoreCase("ok"))
                 {
-                    addToSendQueue(new Packet1Login(mc.field_6320_i.inventory, "Password", 6));
+                    addToSendQueue(new Packet1Login(mc.session.inventory, "Password", 6));
                 } else
                 {
                     netManager.networkShutdown((new StringBuilder()).append("Failed to login: ").append(s).toString());

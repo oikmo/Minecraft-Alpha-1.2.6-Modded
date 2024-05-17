@@ -14,7 +14,7 @@ public class PlayerController
         mc = minecraft;
     }
 
-    public void func_717_a(World world)
+    public void onWorldChange(World world)
     {
     }
 
@@ -32,7 +32,7 @@ public class PlayerController
         boolean flag = world.setBlockWithNotify(i, j, k, 0);
         if(block != null && flag)
         {
-            mc.sndManager.playSound(block.stepSound.func_1146_a(), (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, (block.stepSound.func_1147_b() + 1.0F) / 2.0F, block.stepSound.func_1144_c() * 0.8F);
+            mc.sndManager.playSound(block.stepSound.func_1146_a(), (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
             block.onBlockDestroyedByPlayer(world, i, j, k, i1);
         }
         return flag;
@@ -42,7 +42,7 @@ public class PlayerController
     {
     }
 
-    public void func_6468_a()
+    public void resetBlockRemoving()
     {
     }
 
@@ -77,7 +77,7 @@ public class PlayerController
     {
     }
 
-    public void func_6474_c()
+    public void updateController()
     {
     }
 
@@ -108,15 +108,15 @@ public class PlayerController
 
     public EntityPlayer createPlayer(World world)
     {
-        return new EntityPlayerSP(mc, world, mc.field_6320_i, world.worldProvider.field_4218_e);
+        return new EntityPlayerSP(mc, world, mc.session, world.worldProvider.field_4218_e);
     }
 
-    public void func_6475_a(EntityPlayer entityplayer, Entity entity)
+    public void interactWithEntity(EntityPlayer entityplayer, Entity entity)
     {
-        entityplayer.func_6415_a_(entity);
+        entityplayer.useCurrentItemOnEntity(entity);
     }
 
-    public void func_6472_b(EntityPlayer entityplayer, Entity entity)
+    public void attackEntity(EntityPlayer entityplayer, Entity entity)
     {
         entityplayer.attackTargetEntityWithCurrentItem(entity);
     }

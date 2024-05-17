@@ -148,7 +148,7 @@ public class EntityPlayerSP extends EntityPlayer
         return inventory.getTotalArmorValue();
     }
 
-    public void func_6415_a_(Entity entity)
+    public void useCurrentItemOnEntity(Entity entity)
     {
         if(entity.interact(this))
         {
@@ -160,7 +160,7 @@ public class EntityPlayerSP extends EntityPlayer
             itemstack.useItemOnEntity((EntityLiving)entity);
             if(itemstack.stackSize <= 0)
             {
-                itemstack.func_1097_a(this);
+                itemstack.onItemDestroyedByUse(this);
                 destroyCurrentEquippedItem();
             }
         }

@@ -490,11 +490,11 @@ public abstract class Entity
                 if(worldObj.getBlockId(l, j1 + 1, l1) == Block.snow.blockID)
                 {
                     stepsound = Block.snow.stepSound;
-                    worldObj.playSoundAtEntity(this, stepsound.func_1145_d(), stepsound.func_1147_b() * 0.15F, stepsound.func_1144_c());
+                    worldObj.playSoundAtEntity(this, stepsound.getStepSound(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
                 } else
                 if(!Block.blocksList[i3].blockMaterial.getIsLiquid())
                 {
-                    worldObj.playSoundAtEntity(this, stepsound.func_1145_d(), stepsound.func_1147_b() * 0.15F, stepsound.func_1144_c());
+                    worldObj.playSoundAtEntity(this, stepsound.getStepSound(), stepsound.getVolume() * 0.15F, stepsound.getPitch());
                 }
                 Block.blocksList[i3].onEntityWalking(worldObj, l, j1, l1, this);
             }

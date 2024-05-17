@@ -34,12 +34,12 @@ public class PlayerControllerTest extends PlayerController
         return false;
     }
 
-    public void func_717_a(World world)
+    public void onWorldChange(World world)
     {
-        super.func_717_a(world);
+        super.onWorldChange(world);
     }
 
-    public void func_6474_c()
+    public void updateController()
     {
     }
 }

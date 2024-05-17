@@ -142,7 +142,7 @@ public final class ItemStack
         return Item.itemsList[itemID].canHarvestBlock(block);
     }
 
-    public void func_1097_a(EntityPlayer entityplayer)
+    public void onItemDestroyedByUse(EntityPlayer entityplayer)
     {
     }
 

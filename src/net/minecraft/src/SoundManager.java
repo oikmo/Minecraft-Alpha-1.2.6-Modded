@@ -4,14 +4,10 @@ package net.minecraft.src;
 // Decompiler options: packimports(3) braces deadcode 
 
 import java.io.File;
-import java.io.PrintStream;
 import java.util.Random;
 
 import paulscode.sound.SoundSystem;
 import paulscode.sound.SoundSystemConfig;
-import paulscode.sound.codecs.CodecJOrbis;
-import paulscode.sound.codecs.CodecWav;
-import paulscode.sound.libraries.LibraryLWJGLOpenAL;
 
 public class SoundManager
 {
@@ -21,14 +17,14 @@ public class SoundManager
         soundPoolSounds = new SoundPool();
         soundPoolStreaming = new SoundPool();
         soundPoolMusic = new SoundPool();
-        field_587_e = 0;
+        latestSoundID = 0;
         rand = new Random();
-        field_583_i = rand.nextInt(12000);
+        ticksBeforeMusic = rand.nextInt(12000);
     }
 
     public void func_340_a(GameSettings gamesettings)
     {
-        soundPoolStreaming.field_1657_b = false;
+        soundPoolStreaming.isGetRandomSound = false;
         options = gamesettings;
         if(!loaded && (gamesettings == null || gamesettings.soundVolume != 0.0F || gamesettings.musicVolume != 0.0F))
         {
@@ -85,7 +81,7 @@ public class SoundManager
         }
     }
 
-    public void func_6372_a(String s, File file)
+    public void addSound(String s, File file)
     {
         soundPoolSounds.addSound(s, file);
     }
@@ -100,7 +96,7 @@ public class SoundManager
         soundPoolMusic.addSound(s, file);
     }
 
-    public void func_4033_c()
+    public void playRandomMusicIfReady()
     {
         if(!loaded || options.musicVolume == 0.0F)
         {
@@ -108,15 +104,15 @@ public class SoundManager
         }
         if(!sndSystem.playing("BgMusic") && !sndSystem.playing("streaming"))
         {
-            if(field_583_i > 0)
+            if(ticksBeforeMusic > 0)
             {
-                field_583_i--;
+                ticksBeforeMusic--;
                 return;
             }
             SoundPoolEntry soundpoolentry = soundPoolMusic.getRandomSound();
             if(soundpoolentry != null)
             {
-                field_583_i = rand.nextInt(12000) + 12000;
+                ticksBeforeMusic = rand.nextInt(12000) + 12000;
                 sndSystem.backgroundMusic("BgMusic", soundpoolentry.soundUrl, soundpoolentry.soundName, false);
                 sndSystem.setVolume("BgMusic", options.musicVolume);
                 sndSystem.play("BgMusic");
@@ -124,7 +120,7 @@ public class SoundManager
         }
     }
 
-    public void func_338_a(EntityLiving entityliving, float f)
+    public void setListener(EntityLiving entityliving, float f)
     {
         if(!loaded || options.soundVolume == 0.0F)
         {
@@ -191,8 +187,8 @@ public class SoundManager
         SoundPoolEntry soundpoolentry = soundPoolSounds.getRandomSoundFromSoundPool(s);
         if(soundpoolentry != null && f3 > 0.0F)
         {
-            field_587_e = (field_587_e + 1) % 256;
-            String s1 = (new StringBuilder()).append("sound_").append(field_587_e).toString();
+            latestSoundID = (latestSoundID + 1) % 256;
+            String s1 = (new StringBuilder()).append("sound_").append(latestSoundID).toString();
             float f5 = 16F;
             if(f3 > 1.0F)
             {
@@ -218,8 +214,8 @@ public class SoundManager
         SoundPoolEntry soundpoolentry = soundPoolSounds.getRandomSoundFromSoundPool(s);
         if(soundpoolentry != null)
         {
-            field_587_e = (field_587_e + 1) % 256;
-            String s1 = (new StringBuilder()).append("sound_").append(field_587_e).toString();
+            latestSoundID = (latestSoundID + 1) % 256;
+            String s1 = (new StringBuilder()).append("sound_").append(latestSoundID).toString();
             sndSystem.newSource(false, s1, soundpoolentry.soundUrl, soundpoolentry.soundName, false, 0.0F, 0.0F, 0.0F, 0, 0.0F);
             if(f > 1.0F)
             {
@@ -236,10 +232,10 @@ public class SoundManager
     private SoundPool soundPoolSounds;
     private SoundPool soundPoolStreaming;
     private SoundPool soundPoolMusic;
-    private int field_587_e;
+    private int latestSoundID;
     private GameSettings options;
     private static boolean loaded = false;
     private Random rand;
-    private int field_583_i;
+    private int ticksBeforeMusic;
 
 }

@@ -37,7 +37,7 @@ public class PlayerControllerSP extends PlayerController
             itemstack.hitBlock(i1, i, j, k);
             if(itemstack.stackSize == 0)
             {
-                itemstack.func_1097_a(mc.thePlayer);
+                itemstack.onItemDestroyedByUse(mc.thePlayer);
                 mc.thePlayer.destroyCurrentEquippedItem();
             }
         }
@@ -61,7 +61,7 @@ public class PlayerControllerSP extends PlayerController
         }
     }
 
-    public void func_6468_a()
+    public void resetBlockRemoving()
     {
         field_1071_f = 0.0F;
         field_1068_i = 0;
@@ -85,7 +85,7 @@ public class PlayerControllerSP extends PlayerController
             field_1071_f += block.getBlockStrength(mc.thePlayer);
             if(field_1069_h % 4F == 0.0F && block != null)
             {
-                mc.sndManager.playSound(block.stepSound.func_1145_d(), (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, (block.stepSound.func_1147_b() + 1.0F) / 8F, block.stepSound.func_1144_c() * 0.5F);
+                mc.sndManager.playSound(block.stepSound.getStepSound(), (float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, (block.stepSound.getVolume() + 1.0F) / 8F, block.stepSound.getPitch() * 0.5F);
             }
             field_1069_h++;
             if(field_1071_f >= 1.0F)
@@ -111,13 +111,13 @@ public class PlayerControllerSP extends PlayerController
     {
         if(field_1071_f <= 0.0F)
         {
-            mc.ingameGUI.field_6446_b = 0.0F;
-            mc.renderGlobal.field_1450_i = 0.0F;
+            mc.ingameGUI.damageGuiPartialTime = 0.0F;
+            mc.renderGlobal.damagePartialTime = 0.0F;
         } else
         {
             float f1 = field_1070_g + (field_1071_f - field_1070_g) * f;
-            mc.ingameGUI.field_6446_b = f1;
-            mc.renderGlobal.field_1450_i = f1;
+            mc.ingameGUI.damageGuiPartialTime = f1;
+            mc.renderGlobal.damagePartialTime = f1;
         }
     }
 
@@ -126,15 +126,15 @@ public class PlayerControllerSP extends PlayerController
         return 4F;
     }
 
-    public void func_717_a(World world)
+    public void onWorldChange(World world)
     {
-        super.func_717_a(world);
+        super.onWorldChange(world);
     }
 
-    public void func_6474_c()
+    public void updateController()
     {
         field_1070_g = field_1071_f;
-        mc.sndManager.func_4033_c();
+        mc.sndManager.playRandomMusicIfReady();
     }
 
     private int field_1074_c;

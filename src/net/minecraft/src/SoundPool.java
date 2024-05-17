@@ -17,7 +17,7 @@ public class SoundPool
         nameToSoundPoolEntriesMapping = new HashMap<String, ArrayList<?>>();
         allSoundPoolEntries = new ArrayList<SoundPoolEntry>();
         numberOfSoundPoolEntries = 0;
-        field_1657_b = true;
+        isGetRandomSound = true;
     }
 
     public SoundPoolEntry addSound(String s, File file)
@@ -26,7 +26,7 @@ public class SoundPool
         {
             String s1 = s;
             s = s.substring(0, s.indexOf("."));
-            if(field_1657_b)
+            if(isGetRandomSound)
             {
                 for(; Character.isDigit(s.charAt(s.length() - 1)); s = s.substring(0, s.length() - 1)) { }
             }
@@ -75,5 +75,5 @@ public class SoundPool
     private Map<String, ArrayList<?>> nameToSoundPoolEntriesMapping;
     private List<SoundPoolEntry> allSoundPoolEntries;
     public int numberOfSoundPoolEntries;
-    public boolean field_1657_b;
+    public boolean isGetRandomSound;
 }

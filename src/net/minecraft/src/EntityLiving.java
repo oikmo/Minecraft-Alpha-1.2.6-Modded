@@ -420,7 +420,7 @@ public class EntityLiving extends Entity
             if(j > 0)
             {
                 StepSound stepsound = Block.blocksList[j].stepSound;
-                worldObj.playSoundAtEntity(this, stepsound.func_1145_d(), stepsound.func_1147_b() * 0.5F, stepsound.func_1144_c() * 0.75F);
+                worldObj.playSoundAtEntity(this, stepsound.getStepSound(), stepsound.getVolume() * 0.5F, stepsound.getPitch() * 0.75F);
             }
         }
     }

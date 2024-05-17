@@ -933,7 +933,7 @@ public class RenderGlobal
         GL11.glColor4f(1.0F, 1.0F, 1.0F, (MathHelper.sin((float)System.currentTimeMillis() / 100F) * 0.2F + 0.4F) * 0.5F);
         if(i == 0)
         {
-            if(field_1450_i > 0.0F)
+            if(damagePartialTime > 0.0F)
             {
                 GL11.glBlendFunc(774, 768);
                 int j = renderEngine.getTexture("/terrain.png");
@@ -955,7 +955,7 @@ public class RenderGlobal
                 {
                     block = Block.stone;
                 }
-                field_1438_u.renderBlockUsingTexture(block, movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ, 240 + (int)(field_1450_i * 10F));
+                field_1438_u.renderBlockUsingTexture(block, movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ, 240 + (int)(damagePartialTime * 10F));
                 tessellator.draw();
                 tessellator.setTranslationD(0.0D, 0.0D, 0.0D);
                 GL11.glPolygonOffset(0.0F, 0.0F);
@@ -1260,6 +1260,6 @@ public class RenderGlobal
     double field_1453_f;
     double field_1452_g;
     double field_1451_h;
-    public float field_1450_i;
+    public float damagePartialTime;
     int frustrumCheckOffset;
 }

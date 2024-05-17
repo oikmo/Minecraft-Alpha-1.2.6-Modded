@@ -20,7 +20,7 @@ public class ItemHoe extends Item
         if(!material.func_878_a() && i1 == Block.grass.blockID || i1 == Block.dirt.blockID)
         {
             Block block = Block.tilledField;
-            world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.func_1145_d(), (block.stepSound.func_1147_b() + 1.0F) / 2.0F, block.stepSound.func_1144_c() * 0.8F);
+            world.playSoundEffect((float)i + 0.5F, (float)j + 0.5F, (float)k + 0.5F, block.stepSound.getStepSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
             if(world.multiplayerWorld)
             {
                 return true;

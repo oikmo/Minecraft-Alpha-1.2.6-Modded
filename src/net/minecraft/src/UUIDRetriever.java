@@ -1,6 +1,5 @@
 package net.minecraft.src;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -11,7 +10,6 @@ import javax.json.stream.JsonParser;
 import javax.json.stream.JsonParser.Event;
 
 public class UUIDRetriever {
-	@SuppressWarnings("null")
 	public static String GetUUIDFromName(String name) {
 		
 		System.setProperty("http.agent", "Chrome");

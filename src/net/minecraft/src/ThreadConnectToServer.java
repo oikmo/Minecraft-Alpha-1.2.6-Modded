@@ -27,7 +27,7 @@ class ThreadConnectToServer extends Thread
             {
                 return;
             }
-            GuiConnecting.getNetClientHandler(connectingGui).addToSendQueue(new Packet2Handshake(mc.field_6320_i.inventory));
+            GuiConnecting.getNetClientHandler(connectingGui).addToSendQueue(new Packet2Handshake(mc.session.inventory));
         }
         catch(UnknownHostException unknownhostexception)
         {

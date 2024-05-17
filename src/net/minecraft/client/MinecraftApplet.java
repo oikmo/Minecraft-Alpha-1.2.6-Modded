@@ -26,13 +26,13 @@ public class MinecraftApplet extends Applet {
 		}
 
 		if(this.getParameter("username") != null && this.getParameter("sessionid") != null) {
-			this.mc.field_6320_i = new Session(this.getParameter("username"), this.getParameter("sessionid"));
-			System.out.println("Setting user: " + this.mc.field_6320_i.inventory + ", " + this.mc.field_6320_i.field_6543_c);
+			this.mc.session = new Session(this.getParameter("username"), this.getParameter("sessionid"));
+			System.out.println("Setting user: " + this.mc.session.inventory + ", " + this.mc.session.field_6543_c);
 			if(this.getParameter("mppass") != null) {
-				this.mc.field_6320_i.field_6542_d = this.getParameter("mppass");
+				this.mc.session.field_6542_d = this.getParameter("mppass");
 			}
 		} else {
-			this.mc.field_6320_i = new Session("Player", "");
+			this.mc.session = new Session("Player", "");
 		}
 
 		if(this.getParameter("loadmap_user") != null && this.getParameter("loadmap_id") != null) {

@@ -396,7 +396,7 @@ public class GuiIngame extends Gui
     private int updateCounter;
     private String field_9420_i;
     private int field_9419_j;
-    public float field_6446_b;
+    public float damageGuiPartialTime;
     float field_931_c;
 
 }

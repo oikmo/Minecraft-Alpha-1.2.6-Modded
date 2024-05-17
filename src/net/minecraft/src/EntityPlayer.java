@@ -306,7 +306,7 @@ public class EntityPlayer extends EntityLiving
     {
     }
 
-    public void func_6415_a_(Entity entity)
+    public void useCurrentItemOnEntity(Entity entity)
     {
         entity.interact(this);
     }
@@ -344,7 +344,7 @@ public class EntityPlayer extends EntityLiving
                 itemstack.hitEntity((EntityLiving)entity);
                 if(itemstack.stackSize <= 0)
                 {
-                    itemstack.func_1097_a(this);
+                    itemstack.onItemDestroyedByUse(this);
                     destroyCurrentEquippedItem();
                 }
             }
