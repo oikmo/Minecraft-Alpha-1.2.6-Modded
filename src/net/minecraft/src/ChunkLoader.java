@@ -18,7 +18,7 @@ public class ChunkLoader
 
     private File chunkFileForXZ(int i, int j)
     {
-        String s = (new StringBuilder()).append("c.").append(Integer.toString(i, 36)).append(".").append(Integer.toString(j, 36)).append(".dat").toString();
+        String s = "c."+Integer.toString(i, 36)+"."+Integer.toString(j, 36)+".dat";
         String s1 = Integer.toString(i & 0x3f, 36);
         String s2 = Integer.toString(j & 0x3f, 36);
         File file = new File(saveDir, s1);
@@ -61,7 +61,7 @@ public class ChunkLoader
             try
             {
                 FileInputStream fileinputstream = new FileInputStream(file);
-                NBTTagCompound nbttagcompound = CompressedStreamTools.func_1138_a(fileinputstream);
+                NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(fileinputstream);
                 if(!nbttagcompound.hasKey("Level"))
                 {
                     System.out.println((new StringBuilder()).append("Chunk file at ").append(i).append(",").append(j).append(" is missing level data, skipping").toString());
@@ -92,7 +92,7 @@ public class ChunkLoader
 
     public void saveChunk(World world, Chunk chunk)
     {
-        world.func_663_l();
+        world.checkSessionLock();
         File file = chunkFileForXZ(chunk.xPosition, chunk.zPosition);
         if(file.exists())
         {
@@ -123,7 +123,7 @@ public class ChunkLoader
 
     public void storeChunkInCompound(Chunk chunk, World world, NBTTagCompound nbttagcompound)
     {
-        world.func_663_l();
+        world.checkSessionLock();
         nbttagcompound.setInteger("xPos", chunk.xPosition);
         nbttagcompound.setInteger("zPos", chunk.zPosition);
         nbttagcompound.setLong("LastUpdate", world.worldTime);

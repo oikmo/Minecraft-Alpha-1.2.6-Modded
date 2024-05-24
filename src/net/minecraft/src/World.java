@@ -23,7 +23,7 @@ public class World
         {
             try
             {
-                NBTTagCompound nbttagcompound = CompressedStreamTools.func_1138_a(new FileInputStream(file3));
+                NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(new FileInputStream(file3));
                 NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
                 return nbttagcompound1;
             }
@@ -89,7 +89,7 @@ public class World
         field_9437_g = (new Random()).nextInt();
         field_9436_h = 0x3c6ef35f;
         field_1043_h = false;
-        field_1054_E = System.currentTimeMillis();
+        lockTimestamp = System.currentTimeMillis();
         autosavePeriod = 40;
         rand = new Random();
         isNewWorld = false;
@@ -126,7 +126,7 @@ public class World
         field_9437_g = (new Random()).nextInt();
         field_9436_h = 0x3c6ef35f;
         field_1043_h = false;
-        field_1054_E = System.currentTimeMillis();
+        lockTimestamp = System.currentTimeMillis();
         autosavePeriod = 40;
         rand = new Random();
         isNewWorld = false;
@@ -139,7 +139,7 @@ public class World
         field_9426_L = rand.nextInt(12000);
         entityList = new ArrayList<Entity>();
         multiplayerWorld = false;
-        field_1054_E = world.field_1054_E;
+        lockTimestamp = world.lockTimestamp;
         field_9433_s = world.field_9433_s;
         field_9432_t = world.field_9432_t;
         field_9431_w = world.field_9431_w;
@@ -176,7 +176,7 @@ public class World
         field_9437_g = (new Random()).nextInt();
         field_9436_h = 0x3c6ef35f;
         field_1043_h = false;
-        field_1054_E = System.currentTimeMillis();
+        lockTimestamp = System.currentTimeMillis();
         autosavePeriod = 40;
         rand = new Random();
         isNewWorld = false;
@@ -200,7 +200,7 @@ public class World
             DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(file1));
             try
             {
-                dataoutputstream.writeLong(field_1054_E);
+                dataoutputstream.writeLong(lockTimestamp);
             }
             finally
             {
@@ -219,7 +219,7 @@ public class World
         {
             try
             {
-                NBTTagCompound nbttagcompound = CompressedStreamTools.func_1138_a(new FileInputStream(file2));
+                NBTTagCompound nbttagcompound = CompressedStreamTools.readCompressed(new FileInputStream(file2));
                 NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("Data");
                 randomSeed = nbttagcompound1.getLong("RandomSeed");
                 spawnX = nbttagcompound1.getInteger("SpawnX");
@@ -336,7 +336,7 @@ public class World
 
     private void saveLevel()
     {
-        func_663_l();
+        checkSessionLock();
         NBTTagCompound nbttagcompound = new NBTTagCompound();
         nbttagcompound.setLong("RandomSeed", randomSeed);
         nbttagcompound.setInteger("SpawnX", spawnX);
@@ -2302,7 +2302,7 @@ public class World
     {
     }
 
-    public void func_663_l()
+    public void checkSessionLock()
     {
         try
         {
@@ -2310,7 +2310,7 @@ public class World
             DataInputStream datainputstream = new DataInputStream(new FileInputStream(file));
             try
             {
-                if(datainputstream.readLong() != field_1054_E)
+                if(datainputstream.readLong() != lockTimestamp)
                 {
                     throw new MinecraftException("The save is being accessed from another location, aborting");
                 }
@@ -2422,7 +2422,7 @@ public class World
     protected int field_9437_g;
     protected int field_9436_h;
     public boolean field_1043_h;
-    private long field_1054_E;
+    private long lockTimestamp;
     protected int autosavePeriod;
     public int difficultySetting;
     public Random rand;
