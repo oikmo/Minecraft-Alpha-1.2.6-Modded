@@ -78,7 +78,7 @@ public class GuiSelectWorld extends GuiScreen
         {
             selected = true;
             mc.playerController = new PlayerControllerSP(mc);
-            mc.func_6247_b((new StringBuilder()).append("World").append(i).toString());
+            mc.startWorld("World"+i);
             mc.displayGuiScreen(null);
             return;
         }

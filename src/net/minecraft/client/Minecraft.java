@@ -121,7 +121,7 @@ public abstract class Minecraft implements Runnable {
 	public SoundManager sndManager = new SoundManager();
 	public MouseHelper mouseHelper;
 	public TexturePackList texturePackList;
-	public File field_6297_D;
+	public File mcDataDir;
 	public static long[] field_9240_E = new long[512];
 	public static long[] field_9239_F = new long[512];
 	public static int field_9238_G = 0;
@@ -216,9 +216,9 @@ public abstract class Minecraft implements Runnable {
 		Display.setTitle("Minecraft Alpha v1.2.6");
 		
 		RenderManager.instance.itemRenderer = new ItemRenderer(this);
-		this.field_6297_D = getMinecraftDir();
-		this.gameSettings = new GameSettings(this, this.field_6297_D);
-		this.texturePackList = new TexturePackList(this, this.field_6297_D);
+		this.mcDataDir = getMinecraftDir();
+		this.gameSettings = new GameSettings(this, this.mcDataDir);
+		this.texturePackList = new TexturePackList(this, this.mcDataDir);
 		this.renderEngine = new RenderEngine(this.texturePackList, this.gameSettings);
 		this.fontRenderer = new FontRenderer(this.gameSettings, "/font/default.png", this.renderEngine);
 		this.loadScreen();
@@ -261,7 +261,7 @@ public abstract class Minecraft implements Runnable {
 		this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
 
 		try {
-			this.downloadResourcesThread = new ThreadDownloadResources(this.field_6297_D, this);
+			this.downloadResourcesThread = new ThreadDownloadResources(this.mcDataDir, this);
 			this.downloadResourcesThread.start();
 		} catch (Exception var3) {
 		}
@@ -1090,7 +1090,7 @@ public abstract class Minecraft implements Runnable {
 		return this.theWorld != null && this.theWorld.multiplayerWorld;
 	}
 
-	public void func_6247_b(String var1) {
+	public void startWorld(String var1) {
 		this.changeWorld1((World)null);
 		System.gc();
 		World var2 = new World(new File(getMinecraftDir(), "saves"), var1);

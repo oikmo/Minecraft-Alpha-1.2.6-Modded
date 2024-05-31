@@ -260,45 +260,45 @@ public class Chunk
         return blocks[i << 11 | k << 7 | j];
     }
 
-    public boolean setBlockIDWithMetadata(int i, int j, int k, int l, int i1)
+    public boolean setBlockIDWithMetadata(int x, int y, int z, int l, int i1)
     {
         byte byte0 = (byte)l;
-        int j1 = heightMap[k << 4 | i] & 0xff;
-        int k1 = blocks[i << 11 | k << 7 | j] & 0xff;
-        if(k1 == l && data.getNibble(i, j, k) == i1)
+        int j1 = heightMap[z << 4 | x] & 0xff;
+        int k1 = blocks[x << 11 | z << 7 | y] & 0xff;
+        if(k1 == l && data.getNibble(x, y, z) == i1)
         {
             return false;
         }
-        int l1 = xPosition * 16 + i;
-        int i2 = zPosition * 16 + k;
-        blocks[i << 11 | k << 7 | j] = byte0;
+        int l1 = xPosition * 16 + x;
+        int i2 = zPosition * 16 + z;
+        blocks[x << 11 | z << 7 | y] = byte0;
         if(k1 != 0 && !worldObj.multiplayerWorld)
         {
-            Block.blocksList[k1].onBlockRemoval(worldObj, l1, j, i2);
+            Block.blocksList[k1].onBlockRemoval(worldObj, l1, y, i2);
         }
-        data.setNibble(i, j, k, i1);
+        data.setNibble(x, y, z, i1);
         if(!worldObj.worldProvider.field_6478_e)
         {
             if(Block.lightOpacity[byte0] != 0)
             {
-                if(j >= j1)
+                if(y >= j1)
                 {
-                    func_1003_g(i, j + 1, k);
+                    func_1003_g(x, y + 1, z);
                 }
             } else
-            if(j == j1 - 1)
+            if(y == j1 - 1)
             {
-                func_1003_g(i, j, k);
+                func_1003_g(x, y, z);
             }
-            worldObj.func_616_a(EnumSkyBlock.Sky, l1, j, i2, l1, j, i2);
+            worldObj.func_616_a(EnumSkyBlock.Sky, l1, y, i2, l1, y, i2);
         }
-        worldObj.func_616_a(EnumSkyBlock.Block, l1, j, i2, l1, j, i2);
-        func_996_c(i, k);
+        worldObj.func_616_a(EnumSkyBlock.Block, l1, y, i2, l1, y, i2);
+        func_996_c(x, z);
         if(l != 0)
         {
-            Block.blocksList[l].onBlockAdded(worldObj, l1, j, i2);
+            Block.blocksList[l].onBlockAdded(worldObj, l1, y, i2);
         }
-        data.setNibble(i, j, k, i1);
+        data.setNibble(x, y, z, i1);
         isModified = true;
         return true;
     }

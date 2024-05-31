@@ -16,11 +16,11 @@ public class ChunkLoader
         createIfNecessary = flag;
     }
 
-    private File chunkFileForXZ(int i, int j)
+    private File chunkFileForXZ(int x, int z)
     {
-        String s = "c."+Integer.toString(i, 36)+"."+Integer.toString(j, 36)+".dat";
-        String s1 = Integer.toString(i & 0x3f, 36);
-        String s2 = Integer.toString(j & 0x3f, 36);
+        String s = "c."+Integer.toString(x, 36)+"."+Integer.toString(z, 36)+".dat";
+        String s1 = Integer.toString(x & 0x3f, 36);
+        String s2 = Integer.toString(z & 0x3f, 36);
         File file = new File(saveDir, s1);
         if(!file.exists())
         {

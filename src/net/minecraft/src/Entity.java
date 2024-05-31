@@ -461,7 +461,7 @@ public abstract class Entity
         field_9296_aJ = d6 != d1;
         onGround = d6 != d1 && d6 < 0.0D;
         field_9295_aK = field_9297_aI || field_9296_aJ;
-        func_9279_a(d1, onGround);
+        updateFallState(d1, onGround);
         if(d5 != d)
         {
             motionX = 0.0D;
@@ -547,7 +547,7 @@ public abstract class Entity
         }
     }
 
-    protected void func_9279_a(double d, boolean flag)
+    protected void updateFallState(double d, boolean flag)
     {
         if(flag)
         {
@@ -820,13 +820,13 @@ public abstract class Entity
 
     public void writeToNBT(NBTTagCompound nbttagcompound)
     {
-        nbttagcompound.setTag("Pos", func_375_a(new double[] {
+        nbttagcompound.setTag("Pos", newDoubleNBTList(new double[] {
             posX, posY, posZ
         }));
-        nbttagcompound.setTag("Motion", func_375_a(new double[] {
+        nbttagcompound.setTag("Motion", newDoubleNBTList(new double[] {
             motionX, motionY, motionZ
         }));
-        nbttagcompound.setTag("Rotation", func_377_a(new float[] {
+        nbttagcompound.setTag("Rotation", newFloatNBTList(new float[] {
             rotationYaw, rotationPitch
         }));
         nbttagcompound.setFloat("FallDistance", fallDistance);
@@ -867,7 +867,7 @@ public abstract class Entity
 
     protected abstract void writeEntityToNBT(NBTTagCompound nbttagcompound);
 
-    protected NBTTagList func_375_a(double ad[])
+    protected NBTTagList newDoubleNBTList(double ad[])
     {
         NBTTagList nbttaglist = new NBTTagList();
         double ad1[] = ad;
@@ -881,7 +881,7 @@ public abstract class Entity
         return nbttaglist;
     }
 
-    protected NBTTagList func_377_a(float af[])
+    protected NBTTagList newFloatNBTList(float af[])
     {
         NBTTagList nbttaglist = new NBTTagList();
         float af1[] = af;
